@@ -1,9 +1,9 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
 class Play extends Phaser.Scene {
 
     constructor() {
-        super('PlayScene')
+        super('PlayScene');
     }
 
     create() {
@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
 
     createMap() {
         const map = this.make.tilemap({key: 'map'});
-        map.addTilesetImage('main_lev_build_1', 'tiles_1');
+        map.addTilesetImage('main_lev_build_1', 'tiles-1');
         return map;
     }
 
