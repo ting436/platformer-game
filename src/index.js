@@ -2,8 +2,8 @@ import Phaser, { UP } from 'phaser';
 import PlayScene from './scenes/Play';
 import PreloadScene from './scenes/Preload';
 
-const HEIGHT = 1280;
-const WIDTH = 600;
+const HEIGHT = 600;
+const WIDTH = 1280;
 
 const SHARED_CONFIG = {
   height: HEIGHT,
