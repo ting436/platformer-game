@@ -2,12 +2,16 @@ import Phaser, { UP } from 'phaser';
 import PlayScene from './scenes/Play';
 import PreloadScene from './scenes/Preload';
 
-const HEIGHT = 600;
-const WIDTH = 1280;
 
+const MAP_WIDTH = 1600;
+
+const WIDTH = document.body.offsetWidth;
+const HEIGHT = 600;
+debugger
 const SHARED_CONFIG = {
-  height: HEIGHT,
+  mapOffset: MAP_WIDTH > WIDTH ? MAP_WIDTH - WIDTH : 0,
   width: WIDTH,
+  height: HEIGHT
 }
 
 const Scenes = [PreloadScene, PlayScene];
