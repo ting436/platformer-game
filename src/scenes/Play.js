@@ -11,7 +11,8 @@ class Play extends Phaser.Scene {
     create() {
         const map = this.createMap();
         const layers = this.createLayers(map);
-        const player = this.createPlayer();
+        const playerZones = this.getPlayerZones(layers.playerZones);
+        const player = this.createPlayer(playerZones);
 
         this.createPlayerColliders(player, {
             colliders: {
@@ -33,20 +34,28 @@ class Play extends Phaser.Scene {
         const platformColliders = map.createStaticLayer('platforms_colliders', tileset);
         const environment = map.createStaticLayer('environment', tileset);
         const platforms = map.createStaticLayer('platforms', tileset);
-        const playerZones = map.getObjectLayer('player_zones').objects;
+        const playerZones = map.getObjectLayer('player_zones');
 
         platformColliders.setCollisionByProperty({collides: true});
         
-        return { environment, platforms, platformColliders };
+        return { environment, platforms, platformColliders, playerZones };
     }
 
-    createPlayer() {
-        return new Player(this, 100, 250);
+    createPlayer({start}) {
+        return new Player(this, start.x, start.y);
     }
 
     createPlayerColliders(player, { colliders }) {
         player
             .addCollider(colliders.platformsColliders);
+    }
+
+    getPlayerZones(playerZonesLayer) {
+        const playerZones = playerZonesLayer.objects;
+        return {
+            start: playerZones.find(zone => zone.name === 'startZone'),
+            end: playerZones.find(zone => zone.name === 'endZone')
+        }
     }
 
     setupFollowupCameraOn(player) {
