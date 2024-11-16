@@ -20,6 +20,7 @@ class Play extends Phaser.Scene {
             }
         })
 
+        this.createEndOfLevel(playerZones.end);
         this.setupFollowupCameraOn(player);
     }
 
@@ -63,6 +64,11 @@ class Play extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, width + mapOffset, height + 200);
         this.cameras.main.setBounds(0, 0, width + mapOffset, height).setZoom(zoomFactor);
         this.cameras.main.startFollow(player);
+    }
+
+    createEndOfLevel(end) {
+        this.physics.add.sprite(end.x, end.y, 'end')
+            .setSize(5, 200)
     }
 }
 export default Play;
