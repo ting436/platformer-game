@@ -14,9 +14,9 @@ class Play extends Phaser.Scene {
         const layers = this.createLayers(map);
         const playerZones = this.getPlayerZones(layers.playerZones);
         const player = this.createPlayer(playerZones.start);
-        const enemy = this.createEnemy();
+        const enemies = this.createEnemies(layers.enemySpawns);
 
-        this.createEnemyColliders(enemy, {
+        this.createEnemyColliders(enemies, {
             colliders: {
                 platformsColliders: layers.platformColliders,
                 player
@@ -45,10 +45,11 @@ class Play extends Phaser.Scene {
         const environment = map.createStaticLayer('environment', tileset);
         const platforms = map.createStaticLayer('platforms', tileset);
         const playerZones = map.getObjectLayer('player_zones');
+        const enemySpawns = map.getObjectLayer('enemy_spawns');
 
         platformColliders.setCollisionByProperty({collides: true});
         
-        return { environment, platforms, platformColliders, playerZones };
+        return { environment, platforms, platformColliders, playerZones, enemySpawns };
     }
 
     createPlayer(start) {
@@ -60,14 +61,20 @@ class Play extends Phaser.Scene {
             .addCollider(colliders.platformsColliders);
     }
 
-    createEnemy() {
-        return new Birdman(this, 200, 300)
+    createEnemies(spawnLayer) {
+
+        return spawnLayer.objects.map(spawnPoint => {
+            return new Birdman(this, spawnPoint.x, spawnPoint.y)
+        })
+        
     }
 
-    createEnemyColliders(enemy, { colliders }) {
-        enemy
+    createEnemyColliders(enemies, { colliders }) {
+        enemies.forEach(enemy => {
+            enemy
             .addCollider(colliders.platformsColliders)
             .addCollider(colliders.player);
+        })
     }
 
     getPlayerZones(playerZonesLayer) {
