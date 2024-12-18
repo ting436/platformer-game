@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import Player from '../entities/Player';
-import Birdman from '../entities/Birdman';
 import Enemies from '../groups/Enemies';
 
 class Play extends Phaser.Scene {
